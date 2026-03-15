@@ -1,0 +1,11 @@
+@use 'variables' as *;
+
+// Convierte px a rem (asumiendo 16px base)
+@function rem($px) {
+  @return calc($px / 16) * 1rem;
+}
+
+// Escala de espaciado por factor
+@function space($n) {
+  @return $space-4 * $n;
+}

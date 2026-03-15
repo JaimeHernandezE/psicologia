@@ -1,0 +1,31 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.appLayout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.appMain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.page {
+  flex: 1;
+  padding: $space-6 $space-8;
+  min-height: calc(100vh - #{$header-height});
+}
+
+.pageTitle {
+  margin-bottom: $space-6;
+  font-family: $font-family-display;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-regular;
+  color: $color-neutral-800;
+}
+
+.pageContent {
+  max-width: 720px;
+}

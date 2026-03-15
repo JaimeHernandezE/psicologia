@@ -1,0 +1,95 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.header {
+  @include flex-between;
+  margin-bottom: $space-6;
+}
+
+.title {
+  font-family: $font-family-display;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-regular;
+  color: $color-neutral-800;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.entry {
+  padding: $space-4;
+  border-radius: $border-radius-md;
+  border: 1px solid $border-color;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+
+  &:hover {
+    border-color: $color-primary-light;
+    box-shadow: $shadow-sm;
+  }
+}
+
+.entryMeta {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  margin-bottom: $space-2;
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+}
+
+.entryBody {
+  font-size: $font-size-base;
+  color: $color-neutral-800;
+  line-height: 1.5;
+}
+
+.empty {
+  padding: $space-8;
+  text-align: center;
+  color: $color-neutral-600;
+  font-size: $font-size-base;
+}
+
+.formRow {
+  margin-bottom: $space-4;
+}
+
+.visibilityRow {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  margin-bottom: $space-4;
+}
+
+.visibilityLabel {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-800;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: $space-3;
+  margin-top: $space-4;
+}
+
+.loading {
+  text-align: center;
+  padding: $space-8;
+  color: $color-neutral-600;
+}
+
+.error {
+  padding: $space-3;
+  font-size: $font-size-sm;
+  color: $color-danger;
+  background: $color-danger-light;
+  border-radius: $border-radius-md;
+  margin-bottom: $space-4;
+}

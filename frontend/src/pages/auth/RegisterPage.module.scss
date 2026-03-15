@@ -1,0 +1,87 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.wrap {
+  min-height: 100vh;
+  @include flex-center;
+  padding: $space-6;
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  padding: $space-8;
+}
+
+.title {
+  font-family: $font-family-display;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-regular;
+  color: $color-neutral-800;
+  margin-bottom: $space-6;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.roleGroup {
+  display: flex;
+  gap: $space-3;
+}
+
+.roleOption {
+  flex: 1;
+  padding: $space-3;
+  border: 1px solid $border-color;
+  border-radius: $border-radius-md;
+  cursor: pointer;
+  text-align: center;
+  font-size: $font-size-sm;
+  background: #fff;
+  color: $color-neutral-600;
+  transition: border-color $transition-fast, background $transition-fast;
+
+  &:hover {
+    border-color: $color-primary-light;
+  }
+
+  &.selected {
+    border-color: $color-primary;
+    background: $color-primary-bg;
+    color: $color-primary-dark;
+    font-weight: $font-weight-medium;
+  }
+}
+
+.submit {
+  margin-top: $space-2;
+}
+
+.footer {
+  margin-top: $space-6;
+  text-align: center;
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+}
+
+.link {
+  color: $color-primary;
+  font-weight: $font-weight-medium;
+
+  &:hover {
+    color: $color-primary-dark;
+    text-decoration: underline;
+  }
+}
+
+.errorBox {
+  padding: $space-3;
+  font-size: $font-size-sm;
+  color: $color-danger;
+  background: $color-danger-light;
+  border-radius: $border-radius-md;
+}

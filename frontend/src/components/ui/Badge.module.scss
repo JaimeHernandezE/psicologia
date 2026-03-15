@@ -1,0 +1,50 @@
+@use '../../styles/abstracts/variables' as *;
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: $space-1 $space-2;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  border-radius: $border-radius-full;
+}
+
+.private {
+  background: $color-private;
+  color: $color-private-text;
+}
+
+.shareable {
+  background: $color-shareable;
+  color: $color-shareable-text;
+}
+
+.pending {
+  background: $color-warning-light;
+  color: $color-warning;
+}
+
+.in_progress {
+  background: $color-primary-bg;
+  color: $color-primary-dark;
+}
+
+.done {
+  background: $color-success-light;
+  color: $color-success;
+}
+
+.active {
+  background: $color-success-light;
+  color: $color-success;
+}
+
+.paused {
+  background: $color-neutral-100;
+  color: $color-neutral-600;
+}
+
+.ended {
+  background: $color-neutral-200;
+  color: $color-neutral-700;
+}

@@ -1,0 +1,122 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.title {
+  font-family: $font-family-display;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-regular;
+  color: $color-neutral-800;
+  margin-bottom: $space-6;
+}
+
+.section {
+  margin-bottom: $space-8;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-800;
+  margin-bottom: $space-4;
+}
+
+.entryList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  margin-bottom: $space-4;
+}
+
+.entryItem {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-3;
+  padding: $space-3;
+  border-radius: $border-radius-md;
+  border: 1px solid $border-color;
+  background: #fff;
+}
+
+.entryPreview {
+  flex: 1;
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+  line-height: 1.4;
+}
+
+.generateBlock {
+  margin-top: $space-4;
+}
+
+.resultBlock {
+  margin-top: $space-6;
+}
+
+.resultLabel {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-800;
+  margin-bottom: $space-2;
+}
+
+.resultTextarea {
+  margin-bottom: $space-2;
+}
+
+.sendBlock {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  margin-top: $space-4;
+}
+
+.undoCountdown {
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+}
+
+.sentList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.sentItem {
+  padding: $space-4;
+  border-radius: $border-radius-md;
+  border: 1px solid $border-color;
+  background: #fff;
+}
+
+.sentMeta {
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+  margin-bottom: $space-2;
+}
+
+.sentContent {
+  font-size: $font-size-base;
+  color: $color-neutral-800;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.loading {
+  text-align: center;
+  padding: $space-6;
+  color: $color-neutral-600;
+}
+
+.error {
+  padding: $space-3;
+  font-size: $font-size-sm;
+  color: $color-danger;
+  background: $color-danger-light;
+  border-radius: $border-radius-md;
+  margin-bottom: $space-4;
+}
+
+.empty {
+  color: $color-neutral-600;
+  font-size: $font-size-base;
+}

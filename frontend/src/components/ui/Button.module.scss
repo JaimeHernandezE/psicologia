@@ -1,0 +1,86 @@
+@use 'sass:color';
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  font-family: $font-family-base;
+  font-weight: $font-weight-medium;
+  border: none;
+  border-radius: $border-radius-md;
+  transition: background $transition-fast, border-color $transition-fast, opacity $transition-fast;
+  cursor: pointer;
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &.loading {
+    pointer-events: none;
+  }
+}
+
+// Sizes
+.sm {
+  padding: $space-1 $space-3;
+  font-size: $font-size-sm;
+  min-height: 32px;
+}
+
+.md {
+  padding: $space-2 $space-4;
+  font-size: $font-size-base;
+  min-height: 40px;
+}
+
+.lg {
+  padding: $space-3 $space-6;
+  font-size: $font-size-lg;
+  min-height: 48px;
+}
+
+// Variants
+.primary {
+  background: $color-primary;
+  color: #fff;
+
+  &:hover:not(:disabled) {
+    background: $color-primary-dark;
+  }
+}
+
+.secondary {
+  background: transparent;
+  color: $color-primary;
+  border: 1px solid $color-primary;
+
+  &:hover:not(:disabled) {
+    background: $color-primary-bg;
+  }
+}
+
+.ghost {
+  background: transparent;
+  color: $color-neutral-600;
+
+  &:hover:not(:disabled) {
+    background: $color-neutral-100;
+  }
+}
+
+.danger {
+  background: $color-danger;
+  color: #fff;
+
+  &:hover:not(:disabled) {
+    background: color.adjust($color-danger, $lightness: -8%);
+  }
+}

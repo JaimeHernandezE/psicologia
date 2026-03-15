@@ -1,0 +1,30 @@
+@use '../abstracts/variables' as *;
+
+html {
+  font-family: $font-family-base;
+  font-size: 16px;
+  font-weight: $font-weight-regular;
+  color: $color-neutral-800;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-display;
+  font-weight: $font-weight-regular;
+  line-height: 1.2;
+}
+
+h1 { font-size: $font-size-3xl; }
+h2 { font-size: $font-size-2xl; }
+h3 { font-size: $font-size-xl; }
+h4 { font-size: $font-size-lg; }
+h5 { font-size: $font-size-base; }
+h6 { font-size: $font-size-sm; }
+
+p {
+  font-size: $font-size-base;
+}
+
+small {
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+}

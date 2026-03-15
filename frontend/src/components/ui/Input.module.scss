@@ -1,0 +1,76 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.label {
+  display: block;
+  margin-bottom: $space-1;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-800;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.input {
+  @include input-base;
+  padding-left: $space-3;
+  padding-right: $space-3;
+
+  &.hasLeftIcon {
+    padding-left: $space-10;
+  }
+
+  &.hasRightIcon {
+    padding-right: $space-10;
+  }
+}
+
+.leftIcon,
+.rightIcon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: $color-neutral-400;
+  pointer-events: none;
+}
+
+.leftIcon {
+  left: $space-3;
+}
+
+.rightIcon {
+  right: $space-3;
+}
+
+.error {
+  .input {
+    border-color: $color-danger;
+
+    &:focus {
+      border-color: $color-danger;
+      outline: 2px solid $color-danger;
+      outline-offset: 2px;
+    }
+  }
+}
+
+.errorMessage {
+  margin-top: $space-1;
+  font-size: $font-size-sm;
+  color: $color-danger;
+}
+
+.hint {
+  margin-top: $space-1;
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+}

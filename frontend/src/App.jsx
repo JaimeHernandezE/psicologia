@@ -1,10 +1,6 @@
-function App() {
-  return (
-    <div>
-      <h1>Psicología</h1>
-      <p>Frontend React + Vite</p>
-    </div>
-  )
-}
+import { RouterProvider } from 'react-router-dom'
+import { router } from './router'
 
-export default App
+export default function App() {
+  return <RouterProvider router={router} />
+}

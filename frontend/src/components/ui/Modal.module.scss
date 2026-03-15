@@ -1,0 +1,66 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+@use '../../styles/base/animations' as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  @include flex-center;
+  padding: $space-6;
+  z-index: 1000;
+  animation: fadeIn $transition-base forwards;
+}
+
+.content {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  max-height: calc(100vh - #{$space-12});
+  overflow: auto;
+  background: #fff;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-lg;
+  animation: slideUp $transition-base ease-out;
+}
+
+.header {
+  @include flex-between;
+  padding: $space-4 $space-6;
+  border-bottom: 1px solid $border-color;
+}
+
+.title {
+  font-family: $font-family-display;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-regular;
+  color: $color-neutral-800;
+}
+
+.closeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: $border-radius-md;
+  color: $color-neutral-600;
+  cursor: pointer;
+  transition: background $transition-fast, color $transition-fast;
+
+  &:hover {
+    background: $color-neutral-100;
+    color: $color-neutral-800;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.body {
+  padding: $space-6;
+}

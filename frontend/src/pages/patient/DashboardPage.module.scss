@@ -1,0 +1,68 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.greeting {
+  font-family: $font-family-display;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-regular;
+  color: $color-neutral-800;
+  margin-bottom: $space-6;
+}
+
+.cards {
+  display: grid;
+  gap: $space-4;
+  margin-bottom: $space-8;
+}
+
+@media (min-width: $bp-md) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.quickLinks {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  max-width: 320px;
+}
+
+.quickLink {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-4;
+  border-radius: $border-radius-md;
+  border: 1px solid $border-color;
+  background: #fff;
+  color: $color-neutral-800;
+  font-size: $font-size-base;
+  text-decoration: none;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+
+  &:hover {
+    border-color: $color-primary-light;
+    box-shadow: $shadow-sm;
+  }
+}
+
+.cardTitle {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-600;
+  margin-bottom: $space-1;
+}
+
+.cardValue {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-regular;
+  color: $color-neutral-800;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-800;
+  margin-bottom: $space-4;
+}

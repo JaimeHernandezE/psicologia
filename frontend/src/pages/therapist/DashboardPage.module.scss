@@ -1,0 +1,85 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.title {
+  font-family: $font-family-display;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-regular;
+  color: $color-neutral-800;
+  margin-bottom: $space-6;
+}
+
+.stats {
+  display: grid;
+  gap: $space-4;
+  margin-bottom: $space-8;
+}
+
+@media (min-width: $bp-md) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-800;
+  margin-bottom: $space-4;
+}
+
+.patientList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.patientCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-4;
+  border-radius: $border-radius-md;
+  border: 1px solid $border-color;
+  background: #fff;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+
+  &:hover {
+    border-color: $color-primary-light;
+    box-shadow: $shadow-sm;
+  }
+}
+
+.patientName {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-800;
+}
+
+.patientMeta {
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+  margin-top: $space-1;
+}
+
+.loading,
+.empty {
+  text-align: center;
+  padding: $space-8;
+  color: $color-neutral-600;
+}
+
+.cardTitle {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-600;
+  margin-bottom: $space-1;
+}
+
+.cardValue {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-regular;
+  color: $color-neutral-800;
+}

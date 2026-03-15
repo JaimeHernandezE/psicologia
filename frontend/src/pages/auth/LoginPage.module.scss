@@ -1,0 +1,70 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.wrap {
+  min-height: 100vh;
+  @include flex-center;
+  padding: $space-6;
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  padding: $space-8;
+}
+
+.title {
+  font-family: $font-family-display;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-regular;
+  color: $color-neutral-800;
+  margin-bottom: $space-6;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.submit {
+  margin-top: $space-2;
+}
+
+.divider {
+  text-align: center;
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+  margin: $space-4 0;
+}
+
+.googleBtn {
+  width: 100%;
+  justify-content: center;
+}
+
+.footer {
+  margin-top: $space-6;
+  text-align: center;
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+}
+
+.link {
+  color: $color-primary;
+  font-weight: $font-weight-medium;
+
+  &:hover {
+    color: $color-primary-dark;
+    text-decoration: underline;
+  }
+}
+
+.errorBox {
+  padding: $space-3;
+  font-size: $font-size-sm;
+  color: $color-danger;
+  background: $color-danger-light;
+  border-radius: $border-radius-md;
+}

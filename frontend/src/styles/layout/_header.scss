@@ -1,0 +1,27 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.header {
+  height: $header-height;
+  padding: 0 $space-6;
+  background: #fff;
+  border-bottom: 1px solid $border-color;
+  @include flex-between;
+}
+
+.headerTitle {
+  font-family: $font-family-display;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-regular;
+  color: $color-neutral-800;
+}
+
+.headerUser {
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+}
+
+.headerActions {
+  @include flex-center;
+  gap: $space-3;
+}

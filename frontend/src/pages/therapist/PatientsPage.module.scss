@@ -1,0 +1,71 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.header {
+  @include flex-between;
+  margin-bottom: $space-6;
+}
+
+.title {
+  font-family: $font-family-display;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-regular;
+  color: $color-neutral-800;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-4;
+  border-radius: $border-radius-md;
+  border: 1px solid $border-color;
+  background: #fff;
+}
+
+.rowLeft {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+.patientEmail {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-800;
+}
+
+.linkMeta {
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+  margin-top: $space-1;
+}
+
+.loading,
+.empty {
+  text-align: center;
+  padding: $space-8;
+  color: $color-neutral-600;
+}
+
+.error {
+  padding: $space-3;
+  font-size: $font-size-sm;
+  color: $color-danger;
+  background: $color-danger-light;
+  border-radius: $border-radius-md;
+  margin-bottom: $space-4;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: $space-3;
+  margin-top: $space-4;
+}

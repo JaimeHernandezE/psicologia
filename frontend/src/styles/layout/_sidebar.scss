@@ -1,0 +1,38 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.sidebar {
+  width: $sidebar-width;
+  min-height: 100vh;
+  background: $color-neutral-50;
+  border-right: 1px solid $border-color;
+  padding: $space-4 0;
+}
+
+.sidebarNav {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.sidebarLink {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-4;
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+  border-radius: 0 $border-radius-md $border-radius-md 0;
+  transition: background $transition-fast, color $transition-fast;
+
+  &:hover {
+    background: $color-neutral-100;
+    color: $color-neutral-800;
+  }
+
+  &.active {
+    background: $color-primary-bg;
+    color: $color-primary-dark;
+    font-weight: $font-weight-medium;
+  }
+}

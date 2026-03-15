@@ -1,0 +1,28 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.card {
+  @include card;
+  transition: box-shadow $transition-fast, border-color $transition-fast;
+
+  &.clickable {
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: $shadow-md;
+      border-color: $color-neutral-400;
+    }
+  }
+}
+
+.paddingSm {
+  padding: $space-3;
+}
+
+.paddingMd {
+  padding: $space-4;
+}
+
+.paddingLg {
+  padding: $space-6;
+}

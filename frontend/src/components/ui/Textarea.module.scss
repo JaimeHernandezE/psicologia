@@ -1,0 +1,57 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.wrapper {
+  width: 100%;
+}
+
+.label {
+  display: block;
+  margin-bottom: $space-1;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-800;
+}
+
+.textarea {
+  @include input-base;
+  min-height: 120px;
+  resize: vertical;
+}
+
+.error {
+  .textarea {
+    border-color: $color-danger;
+
+    &:focus {
+      border-color: $color-danger;
+      outline: 2px solid $color-danger;
+      outline-offset: 2px;
+    }
+  }
+}
+
+.errorMessage {
+  margin-top: $space-1;
+  font-size: $font-size-sm;
+  color: $color-danger;
+}
+
+.hint {
+  margin-top: $space-1;
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: $space-1;
+  font-size: $font-size-xs;
+  color: $color-neutral-600;
+}
+
+.charCount {
+  margin-left: auto;
+}
