@@ -1,0 +1,16 @@
+# Django & server
+Django>=5.0,<6
+djangorestframework>=3.14,<4
+django-cors-headers>=4.3,<5
+gunicorn>=21.0,<23
+
+# Database
+psycopg2-binary>=2.9,<3
+
+# Auth
+djangorestframework-simplejwt>=5.3,<6
+django-allauth>=0.57,<0.69
+
+# Config & media
+python-decouple>=3.8,<4
+Pillow>=10.0,<11

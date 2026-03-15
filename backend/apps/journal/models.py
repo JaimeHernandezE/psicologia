@@ -1,0 +1,1 @@
+# JournalEntry — modelo pendiente
