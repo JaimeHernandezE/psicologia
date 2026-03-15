@@ -1,7 +1,6 @@
 #!/bin/sh
 set -e
 
-# Esperar a que PostgreSQL esté listo
 export PGHOST="${DB_HOST:-db}"
 export PGPORT="${DB_PORT:-5432}"
 export PGUSER="${DB_USER:-postgres}"

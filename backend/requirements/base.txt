@@ -10,6 +10,7 @@ psycopg2-binary>=2.9,<3
 # Auth
 djangorestframework-simplejwt>=5.3,<6
 django-allauth>=0.57,<0.69
+requests>=2.31,<3
 
 # Config & media
 python-decouple>=3.8,<4

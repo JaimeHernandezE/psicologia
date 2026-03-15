@@ -1,0 +1,2 @@
+# Scripts en LF para que funcionen en Docker/Linux
+*.sh text eol=lf
