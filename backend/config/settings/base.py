@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     # Local apps
+    "apps.core",
     "apps.users",
     "apps.links",
     "apps.journal",
@@ -161,3 +162,11 @@ CORS_ALLOWED_ORIGINS = config(
 
 # Feature flags (ej. chat)
 CHAT_ENABLED = config("CHAT_ENABLED", default=False, cast=bool)
+
+# Claude / Anthropic (resúmenes)
+ANTHROPIC_API_KEY = config("ANTHROPIC_API_KEY", default="")
+ANTHROPIC_SUMMARY_MODEL = config("ANTHROPIC_SUMMARY_MODEL", default="claude-sonnet-4-20250514")
+
+# Google OAuth (login con token)
+GOOGLE_CLIENT_ID = config("GOOGLE_CLIENT_ID", default="")
+GOOGLE_CLIENT_SECRET = config("GOOGLE_CLIENT_SECRET", default="")

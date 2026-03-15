@@ -1,0 +1,109 @@
+from django.db import transaction
+from django.utils import timezone
+from rest_framework import status, viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
+from apps.core.permissions import IsTherapist, IsPatient, IsTherapistOrPatient
+from apps.users.models import User
+from apps.links.models import TherapistPatientLink
+from apps.journal.models import JournalEntry
+
+from .claude import generate_summary_from_entries
+from .models import Summary, SummaryEntry
+from .serializers import SummarySerializer, SummaryCreateSerializer
+
+
+class SummaryViewSet(viewsets.ModelViewSet):
+    serializer_class = SummarySerializer
+    permission_classes = [IsTherapistOrPatient]
+
+    def _therapist_queryset(self):
+        return Summary.objects.filter(link__therapist__user=self.request.user).select_related("link")
+
+    def _patient_queryset(self):
+        return Summary.objects.filter(link__patient__user=self.request.user).select_related("link")
+
+    def get_queryset(self):
+        if self.request.user.role == User.Role.THERAPIST:
+            return self._therapist_queryset().filter(is_sent=True)
+        return self._patient_queryset()
+
+    def get_permissions(self):
+        if self.action in ("generate", "send"):
+            return [IsPatient()]
+        return super().get_permissions()
+
+    def create(self, request, *args, **kwargs):
+        return Response(
+            {"detail": "Usa POST /summaries/generate/ para crear un resumen."},
+            status=status.HTTP_405_METHOD_NOT_ALLOWED,
+        )
+
+    @action(detail=False, methods=["post"], url_path="generate")
+    def generate(self, request):
+        serializer = SummaryCreateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        link_id = serializer.validated_data["link_id"]
+        entry_ids = serializer.validated_data["journal_entry_ids"]
+
+        try:
+            link = TherapistPatientLink.objects.get(
+                pk=link_id,
+                patient__user=request.user,
+            )
+        except TherapistPatientLink.DoesNotExist:
+            return Response(
+                {"detail": "Vínculo no encontrado o no eres el paciente."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        entries = JournalEntry.objects.filter(
+            pk__in=entry_ids,
+            patient=link.patient,
+            visibility=JournalEntry.Visibility.SHAREABLE,
+        ).order_by("created_at")
+        if entries.count() != len(entry_ids):
+            return Response(
+                {"detail": "Algunas entradas no existen, no son tuyas o no son compartibles."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            body_ai = generate_summary_from_entries([e.body for e in entries])
+        except ValueError as e:
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response(
+                {"detail": f"Error al generar resumen: {e}"},
+                status=status.HTTP_502_BAD_GATEWAY,
+            )
+
+        with transaction.atomic():
+            summary = Summary.objects.create(link=link, body_ai=body_ai)
+            for entry in entries:
+                SummaryEntry.objects.create(summary=summary, journal_entry=entry)
+        return Response(SummarySerializer(summary).data, status=status.HTTP_201_CREATED)
+
+    def partial_update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.link.patient_id != request.user.patient_profile_id:
+            return Response({"detail": "No puedes editar este resumen."}, status=status.HTTP_403_FORBIDDEN)
+        if "body_edited" not in request.data:
+            return Response(SummarySerializer(instance).data)
+        instance.body_edited = request.data.get("body_edited", instance.body_edited)
+        instance.save(update_fields=["body_edited"])
+        return Response(SummarySerializer(instance).data)
+
+    @action(detail=True, methods=["post"], url_path="send")
+    def send(self, request, pk=None):
+        summary = self.get_object()
+        if summary.link.patient_id != request.user.patient_profile_id:
+            return Response({"detail": "No puedes enviar este resumen."}, status=status.HTTP_403_FORBIDDEN)
+        now = timezone.now()
+        from datetime import timedelta
+        summary.sent_at = now
+        summary.undo_deadline = now + timedelta(seconds=15)
+        summary.is_sent = True
+        summary.save(update_fields=["sent_at", "undo_deadline", "is_sent"])
+        return Response(SummarySerializer(summary).data)
