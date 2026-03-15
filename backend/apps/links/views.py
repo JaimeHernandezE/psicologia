@@ -21,12 +21,18 @@ class LinkViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         if user.role == User.Role.THERAPIST:
-            return TherapistPatientLink.objects.filter(therapist__user=user).select_related(
+            qs = TherapistPatientLink.objects.filter(therapist__user=user).select_related(
                 "therapist__user", "patient__user", "group"
             )
-        return TherapistPatientLink.objects.filter(
-            patient__user=user, status=TherapistPatientLink.Status.ACTIVE
-        ).select_related("therapist__user", "patient__user", "group")
+        else:
+            # Paciente: ve todos sus links (pending + active) para poder aceptar invitaciones
+            qs = TherapistPatientLink.objects.filter(patient__user=user).select_related(
+                "therapist__user", "patient__user", "group"
+            )
+        status_param = self.request.query_params.get("status")
+        if status_param:
+            qs = qs.filter(status=status_param)
+        return qs
 
     def get_permissions(self):
         if self.action == "create":
@@ -81,7 +87,7 @@ class LinkViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=["post"], permission_classes=[IsPatient])
     def activate(self, request, pk=None):
         link = self.get_object()
-        if link.patient_id != request.user.patient_profile_id:
+        if link.patient_id != request.user.patient_profile.id:
             return Response({"detail": "No es tu invitación."}, status=status.HTTP_403_FORBIDDEN)
         if link.status != TherapistPatientLink.Status.PENDING:
             return Response(

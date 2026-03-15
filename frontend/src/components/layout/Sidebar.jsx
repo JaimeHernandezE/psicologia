@@ -5,8 +5,9 @@ import {
   ListTodo,
   FileText,
   Users,
-  UserCircle,
+  Mail,
 } from 'lucide-react'
+import { useLinksList } from '../../hooks/useLinks'
 
 const patientNav = [
   { to: '/app/patient', icon: LayoutDashboard, label: 'Inicio' },
@@ -22,7 +23,10 @@ const therapistNav = [
 ]
 
 export function Sidebar({ role }) {
+  const { data: links = [] } = useLinksList()
+  const pendingCount = role === 'patient' ? (links || []).filter((l) => l.status === 'pending').length : 0
   const nav = role === 'patient' ? patientNav : therapistNav
+
   return (
     <aside className="sidebar">
       <nav className="sidebarNav">
@@ -37,6 +41,17 @@ export function Sidebar({ role }) {
             {label}
           </NavLink>
         ))}
+        {role === 'patient' && pendingCount > 0 && (
+          <NavLink
+            to="/app/patient/invitations"
+            end={false}
+            className={({ isActive }) => `sidebarLink sidebarLinkWithBadge ${isActive ? 'active' : ''}`}
+          >
+            <Mail size={18} />
+            Invitaciones
+            <span className="sidebarBadge">{pendingCount}</span>
+          </NavLink>
+        )}
       </nav>
     </aside>
   )

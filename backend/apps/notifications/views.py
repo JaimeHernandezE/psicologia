@@ -19,7 +19,7 @@ class SessionAlertViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         link = serializer.validated_data["link"]
-        if link.therapist_id != self.request.user.therapist_profile_id:
+        if link.therapist_id != self.request.user.therapist_profile.id:
             from rest_framework.exceptions import PermissionDenied
             raise PermissionDenied("No eres el tratante de este vínculo.")
         serializer.save()

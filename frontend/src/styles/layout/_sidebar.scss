@@ -36,3 +36,20 @@
     font-weight: $font-weight-medium;
   }
 }
+
+.sidebarLinkWithBadge {
+  justify-content: space-between;
+}
+
+.sidebarBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  padding: 0 $space-1;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  background: $color-primary;
+  color: #fff;
+  border-radius: $border-radius-full;
+}

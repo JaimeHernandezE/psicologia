@@ -1,0 +1,71 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.title {
+  font-family: $font-family-display;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-regular;
+  color: $color-neutral-800;
+  margin-bottom: $space-6;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.card {
+  padding: $space-4;
+  border-radius: $border-radius-md;
+  border: 1px solid $border-color;
+  background: #fff;
+}
+
+.cardHeader {
+  @include flex-between;
+  margin-bottom: $space-2;
+}
+
+.therapistName {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-800;
+}
+
+.meta {
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+  margin-bottom: $space-3;
+}
+
+.empty {
+  padding: $space-8;
+  text-align: center;
+  color: $color-neutral-600;
+  font-size: $font-size-base;
+}
+
+.loading {
+  text-align: center;
+  padding: $space-8;
+  color: $color-neutral-600;
+}
+
+.error {
+  padding: $space-3;
+  font-size: $font-size-sm;
+  color: $color-danger;
+  background: $color-danger-light;
+  border-radius: $border-radius-md;
+  margin-bottom: $space-4;
+}
+
+.successMessage {
+  padding: $space-3;
+  font-size: $font-size-sm;
+  color: $color-success;
+  background: $color-primary-bg;
+  border-radius: $border-radius-md;
+  margin-bottom: $space-4;
+}

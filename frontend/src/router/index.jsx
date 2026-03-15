@@ -7,6 +7,7 @@ import PatientDashboardPage from '../pages/patient/DashboardPage'
 import PatientJournalPage from '../pages/patient/JournalPage'
 import PatientTasksPage from '../pages/patient/TasksPage'
 import PatientSummaryPage from '../pages/patient/SummaryPage'
+import PatientInvitationsPage from '../pages/patient/InvitationsPage'
 import TherapistDashboardPage from '../pages/therapist/DashboardPage'
 import TherapistPatientsPage from '../pages/therapist/PatientsPage'
 import TherapistPatientDetailPage from '../pages/therapist/PatientDetailPage'
@@ -40,6 +41,7 @@ export const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <PatientDashboardPage /> },
+      { path: 'invitations', element: <PatientInvitationsPage /> },
       { path: 'journal', element: <PatientJournalPage /> },
       { path: 'tasks', element: <PatientTasksPage /> },
       { path: 'summary', element: <PatientSummaryPage /> },

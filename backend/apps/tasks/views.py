@@ -27,7 +27,7 @@ class TaskViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         link = serializer.validated_data["link"]
-        if link.therapist_id != request.user.therapist_profile_id:
+        if link.therapist_id != request.user.therapist_profile.id:
             return Response({"detail": "No eres el tratante de este vínculo."}, status=status.HTTP_403_FORBIDDEN)
         task = serializer.save()
         TaskProgress.objects.get_or_create(task=task, defaults={"status": TaskProgress.Status.PENDING})
@@ -35,13 +35,13 @@ class TaskViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
-        if instance.link.therapist_id != request.user.therapist_profile_id:
+        if instance.link.therapist_id != request.user.therapist_profile.id:
             return Response({"detail": "Solo el tratante puede editar la tarea."}, status=status.HTTP_403_FORBIDDEN)
         return super().update(request, *args, **kwargs)
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        if instance.link.therapist_id != request.user.therapist_profile_id:
+        if instance.link.therapist_id != request.user.therapist_profile.id:
             return Response({"detail": "Solo el tratante puede eliminar la tarea."}, status=status.HTTP_403_FORBIDDEN)
         return super().destroy(request, *args, **kwargs)
 
@@ -59,7 +59,7 @@ class TaskProgressViewSet(viewsets.ModelViewSet):
 
     def partial_update(self, request, *args, **kwargs):
         instance = self.get_object()
-        if request.user.role == User.Role.PATIENT and instance.task.link.patient_id != request.user.patient_profile_id:
+        if request.user.role == User.Role.PATIENT and instance.task.link.patient_id != request.user.patient_profile.id:
             return Response({"detail": "No es tu tarea."}, status=status.HTTP_403_FORBIDDEN)
         if request.user.role == User.Role.THERAPIST:
             return Response({"detail": "El tratante no puede editar el progreso."}, status=status.HTTP_403_FORBIDDEN)

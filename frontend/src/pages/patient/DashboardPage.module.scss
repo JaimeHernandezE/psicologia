@@ -1,6 +1,54 @@
 @use '../../styles/abstracts/variables' as *;
 @use '../../styles/abstracts/mixins' as *;
 
+.successBanner {
+  padding: $space-3 $space-4;
+  margin-bottom: $space-4;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-primary-dark;
+  background: $color-primary-bg;
+  border: 1px solid $color-primary;
+  border-radius: $border-radius-md;
+}
+
+.invitationBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: $space-3;
+  padding: $space-4;
+  margin-bottom: $space-6;
+  background: $color-primary-bg;
+  border: 1px solid $color-primary;
+  border-radius: $border-radius-md;
+}
+
+.invitationBannerText {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-800;
+  margin: 0;
+}
+
+.invitationBannerBtn {
+  padding: $space-2 $space-4;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-primary-dark;
+  background: #fff;
+  border: 1px solid $color-primary;
+  border-radius: $border-radius-md;
+  text-decoration: none;
+  transition: background $transition-fast, border-color $transition-fast;
+
+  &:hover {
+    background: $color-primary-bg;
+    border-color: $color-primary-dark;
+  }
+}
+
 .greeting {
   font-family: $font-family-display;
   font-size: $font-size-2xl;

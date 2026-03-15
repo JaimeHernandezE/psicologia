@@ -94,7 +94,7 @@ class SummaryViewSet(viewsets.ModelViewSet):
 
     def partial_update(self, request, *args, **kwargs):
         instance = self.get_object()
-        if instance.link.patient_id != request.user.patient_profile_id:
+        if instance.link.patient_id != request.user.patient_profile.id:
             return Response({"detail": "No puedes editar este resumen."}, status=status.HTTP_403_FORBIDDEN)
         if "body_edited" not in request.data:
             return Response(SummarySerializer(instance).data)
@@ -106,7 +106,7 @@ class SummaryViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=["post"], url_path="send")
     def send(self, request, pk=None):
         summary = self.get_object()
-        if summary.link.patient_id != request.user.patient_profile_id:
+        if summary.link.patient_id != request.user.patient_profile.id:
             return Response({"detail": "No puedes enviar este resumen."}, status=status.HTTP_403_FORBIDDEN)
         now = timezone.now()
         from datetime import timedelta
