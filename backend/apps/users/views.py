@@ -1,9 +1,11 @@
 from django.conf import settings
+from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
+from drf_spectacular.utils import extend_schema
 
 from .models import User, TherapistProfile, PatientProfile
 from .serializers import (
@@ -24,6 +26,7 @@ def _tokens_for_user(user):
     }
 
 
+@extend_schema(summary="Registro de usuario", description="Crea un usuario (terapeuta o paciente) y su perfil; devuelve tokens JWT y datos del usuario.")
 class RegisterView(APIView):
     permission_classes = [AllowAny]
 
@@ -34,6 +37,7 @@ class RegisterView(APIView):
         return Response(_tokens_for_user(user), status=status.HTTP_201_CREATED)
 
 
+@extend_schema(summary="Login con email y contraseña", description="Autentica con email y password; devuelve access, refresh y user.")
 class LoginView(APIView):
     permission_classes = [AllowAny]
 
@@ -53,6 +57,7 @@ class LoginView(APIView):
         return Response(_tokens_for_user(user))
 
 
+@extend_schema(summary="Usuario actual", description="GET: devuelve el usuario autenticado con su perfil anidado. PATCH: permite actualizar avatar y bio.")
 class MeView(APIView):
     permission_classes = [IsAuthenticated]
 

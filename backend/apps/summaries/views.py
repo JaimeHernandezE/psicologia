@@ -3,6 +3,7 @@ from django.utils import timezone
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from drf_spectacular.utils import extend_schema, extend_schema_view
 
 from apps.core.permissions import IsTherapist, IsPatient, IsTherapistOrPatient
 from apps.users.models import User
@@ -14,6 +15,11 @@ from .models import Summary, SummaryEntry
 from .serializers import SummarySerializer, SummaryCreateSerializer
 
 
+@extend_schema_view(
+    list=extend_schema(summary="Listar resúmenes", description="Terapeuta: solo enviados (is_sent). Paciente: todos los suyos."),
+    retrieve=extend_schema(summary="Detalle de resumen"),
+    partial_update=extend_schema(summary="Editar resumen", description="El paciente puede editar body_edited antes de enviar."),
+)
 class SummaryViewSet(viewsets.ModelViewSet):
     serializer_class = SummarySerializer
     permission_classes = [IsTherapistOrPatient]
@@ -40,6 +46,7 @@ class SummaryViewSet(viewsets.ModelViewSet):
             status=status.HTTP_405_METHOD_NOT_ALLOWED,
         )
 
+    @extend_schema(summary="Generar resumen con IA", description="Envía entradas de diario (shareable) a Claude; crea el resumen con body_ai y lo devuelve para que el paciente edite body_edited.")
     @action(detail=False, methods=["post"], url_path="generate")
     def generate(self, request):
         serializer = SummaryCreateSerializer(data=request.data)
@@ -95,6 +102,7 @@ class SummaryViewSet(viewsets.ModelViewSet):
         instance.save(update_fields=["body_edited"])
         return Response(SummarySerializer(instance).data)
 
+    @extend_schema(summary="Enviar resumen al terapeuta", description="Marca el resumen como enviado: sent_at=now, undo_deadline=now+15s, is_sent=True.")
     @action(detail=True, methods=["post"], url_path="send")
     def send(self, request, pk=None):
         summary = self.get_object()

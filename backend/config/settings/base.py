@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     # Third party
     "rest_framework",
     "rest_framework_simplejwt",
+    "drf_spectacular",
     "corsheaders",
     "allauth",
     "allauth.account",
@@ -123,6 +124,15 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+# drf-spectacular (documentación API)
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Psicología App API",
+    "DESCRIPTION": "API para plataforma de continuidad terapéutica",
+    "VERSION": "0.1.0",
+    "SERVE_INCLUDE_SCHEMA": False,
 }
 
 # Simple JWT
