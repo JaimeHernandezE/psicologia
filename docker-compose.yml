@@ -38,13 +38,17 @@ services:
   frontend:
     image: node:20-alpine
     working_dir: /app
-    command: sh -c "npm install && npm run dev"
+    # Hot reload con Vite dentro del contenedor
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 5173"
     volumes:
       - ./frontend:/app
     ports:
       - "3000:5173"
     environment:
       - VITE_API_URL=http://localhost:8000
+      # En algunos entornos (especialmente Windows) esto ayuda
+      # a que Vite detecte cambios en volúmenes montados.
+      - CHOKIDAR_USEPOLLING=true
 
 volumes:
   postgres_data:

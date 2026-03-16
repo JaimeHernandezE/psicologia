@@ -1,0 +1,15 @@
+[
+  { "model": "feelings.feeling", "pk": 1, "fields": { "title": "Alegría", "description": "", "emoji": "😊", "color": "#f0c040", "is_system": true, "therapist": null, "order": 1, "is_active": true } },
+  { "model": "feelings.feeling", "pk": 2, "fields": { "title": "Tristeza", "description": "", "emoji": "😔", "color": "#7a9cc4", "is_system": true, "therapist": null, "order": 2, "is_active": true } },
+  { "model": "feelings.feeling", "pk": 3, "fields": { "title": "Ansiedad", "description": "", "emoji": "😰", "color": "#e8a87c", "is_system": true, "therapist": null, "order": 3, "is_active": true } },
+  { "model": "feelings.feeling", "pk": 4, "fields": { "title": "Calma", "description": "", "emoji": "😌", "color": "#5c7a6e", "is_system": true, "therapist": null, "order": 4, "is_active": true } },
+  { "model": "feelings.feeling", "pk": 5, "fields": { "title": "Enojo", "description": "", "emoji": "😠", "color": "#c0392b", "is_system": true, "therapist": null, "order": 5, "is_active": true } },
+  { "model": "feelings.feeling", "pk": 6, "fields": { "title": "Miedo", "description": "", "emoji": "😨", "color": "#9b59b6", "is_system": true, "therapist": null, "order": 6, "is_active": true } },
+  { "model": "feelings.feeling", "pk": 7, "fields": { "title": "Confusión", "description": "", "emoji": "😕", "color": "#95a5a6", "is_system": true, "therapist": null, "order": 7, "is_active": true } },
+  { "model": "feelings.feeling", "pk": 8, "fields": { "title": "Gratitud", "description": "", "emoji": "🙏", "color": "#27ae60", "is_system": true, "therapist": null, "order": 8, "is_active": true } },
+  { "model": "feelings.feeling", "pk": 9, "fields": { "title": "Frustración", "description": "", "emoji": "😤", "color": "#e67e22", "is_system": true, "therapist": null, "order": 9, "is_active": true } },
+  { "model": "feelings.feeling", "pk": 10, "fields": { "title": "Esperanza", "description": "", "emoji": "🌱", "color": "#2ecc71", "is_system": true, "therapist": null, "order": 10, "is_active": true } },
+  { "model": "feelings.feeling", "pk": 11, "fields": { "title": "Soledad", "description": "", "emoji": "😞", "color": "#7f8c8d", "is_system": true, "therapist": null, "order": 11, "is_active": true } },
+  { "model": "feelings.feeling", "pk": 12, "fields": { "title": "Orgullo", "description": "", "emoji": "😤", "color": "#f39c12", "is_system": true, "therapist": null, "order": 12, "is_active": true } }
+]
+
