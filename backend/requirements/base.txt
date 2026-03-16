@@ -6,6 +6,7 @@ gunicorn>=21.0,<23
 
 # Database
 psycopg2-binary>=2.9,<3
+django-timescaledb>=0.2.0
 
 # Auth
 djangorestframework-simplejwt>=5.3,<6

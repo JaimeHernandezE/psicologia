@@ -5,6 +5,7 @@ import { Card } from '../../components/ui'
 import { useAuthStore } from '../../stores/authStore'
 import { useTasksList } from '../../hooks/useTasks'
 import { useLinksList } from '../../hooks/useLinks'
+import { formatDate } from '../../utils/dates'
 import styles from './DashboardPage.module.scss'
 
 export default function PatientDashboardPage() {
@@ -63,7 +64,7 @@ export default function PatientDashboardPage() {
         <Card padding="md">
           <p className={styles.cardTitle}>Próxima sesión</p>
           <p className={styles.cardValue}>
-            {nextSession ? new Date(nextSession).toLocaleDateString('es-ES') : '—'}
+            {nextSession ? formatDate(nextSession) : '—'}
           </p>
         </Card>
       </div>

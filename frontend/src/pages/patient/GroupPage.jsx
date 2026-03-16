@@ -15,6 +15,7 @@ import {
   useSummaryUpdate,
   useSummarySend,
 } from '../../hooks/useSummaries'
+import { formatDate, formatDateLong, formatDateTime } from '../../utils/dates'
 import styles from './GroupPage.module.scss'
 
 const journalSchema = z.object({
@@ -179,13 +180,6 @@ export default function PatientGroupPage() {
       },
     })
   }
-
-  const formatDate = (d) =>
-    d ? new Date(d).toLocaleDateString('es-ES', { dateStyle: 'medium' }) : '—'
-  const formatDateLong = (d) =>
-    d ? new Date(d).toLocaleDateString('es-ES', { dateStyle: 'long' }) : '—'
-  const formatSentDate = (d) =>
-    d ? new Date(d).toLocaleString('es-ES', { dateStyle: 'medium', timeStyle: 'short' }) : '—'
 
   const memberNames = (group?.members || [])
     .map((m) => m.patient?.user?.email ?? m.patient?.user?.first_name ?? `#${m.patient}`)
@@ -478,7 +472,7 @@ export default function PatientGroupPage() {
                     .sort((a, b) => new Date(b.sent_at) - new Date(a.sent_at))
                     .map((s) => (
                       <Card key={s.id} padding="md" className={styles.sentItem}>
-                        <p className={styles.sentMeta}>Enviado: {formatSentDate(s.sent_at)}</p>
+                        <p className={styles.sentMeta}>Enviado: {formatDateTime(s.sent_at)}</p>
                         <div className={styles.sentContent}>{summaryContent(s) || '—'}</div>
                       </Card>
                     ))}

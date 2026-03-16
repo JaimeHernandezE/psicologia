@@ -19,10 +19,17 @@ from .serializers import (
 
 def _tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
+    data = UserSerializer(user).data
+    if hasattr(user, "therapist_profile"):
+        data["profile"] = TherapistProfileSerializer(user.therapist_profile).data
+    elif hasattr(user, "patient_profile"):
+        data["profile"] = PatientProfileSerializer(user.patient_profile).data
+    else:
+        data["profile"] = None
     return {
         "access": str(refresh.access_token),
         "refresh": str(refresh),
-        "user": UserSerializer(user).data,
+        "user": data,
     }
 
 

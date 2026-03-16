@@ -15,6 +15,7 @@ import TherapistPatientDetailPage from '../pages/therapist/PatientDetailPage'
 import TherapistTasksPage from '../pages/therapist/TasksPage'
 import TherapistGroupsPage from '../pages/therapist/GroupsPage'
 import TherapistGroupDetailPage from '../pages/therapist/GroupDetailPage'
+import TherapistAnalyticsPage from '../pages/therapist/AnalyticsPage'
 import { PageWrapper } from '../components/layout/PageWrapper'
 
 function ProtectedRoute({ children, role }) {
@@ -62,6 +63,7 @@ export const router = createBrowserRouter([
       { index: true, element: <TherapistDashboardPage /> },
       { path: 'patients', element: <TherapistPatientsPage /> },
       { path: 'patients/:linkId', element: <TherapistPatientDetailPage /> },
+      { path: 'analytics/:patientId', element: <TherapistAnalyticsPage /> },
       { path: 'tasks', element: <TherapistTasksPage /> },
       { path: 'groups', element: <TherapistGroupsPage /> },
       { path: 'groups/:id', element: <TherapistGroupDetailPage /> },

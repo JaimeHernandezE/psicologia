@@ -3,8 +3,9 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Plus } from 'lucide-react'
-import { Button, Card, Modal, Textarea, Badge } from '../../components/ui'
+import { Button, Card, Modal, Textarea, Badge, FeelingSelector } from '../../components/ui'
 import { useJournalList, useJournalCreate, useJournalUpdate } from '../../hooks/useJournal'
+import { formatDateLong } from '../../utils/dates'
 import styles from './JournalPage.module.scss'
 
 const DEBOUNCE_MS = 400
@@ -22,6 +23,7 @@ const schema = z.object({
 export default function PatientJournalPage() {
   const [modalOpen, setModalOpen] = useState(false)
   const [editingId, setEditingId] = useState(null)
+  const [selectedFeelingIds, setSelectedFeelingIds] = useState([])
   const [searchInput, setSearchInput] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState('')
   const [dateFrom, setDateFrom] = useState('')
@@ -58,31 +60,41 @@ export default function PatientJournalPage() {
 
   const openCreate = () => {
     setEditingId(null)
+    setSelectedFeelingIds([])
     reset({ body: '', visibility: 'private' })
     setModalOpen(true)
   }
 
   const openEdit = (entry) => {
     setEditingId(entry.id)
+    setSelectedFeelingIds(entry.feelings?.map((f) => f.feeling?.id).filter(Boolean) || [])
     reset({ body: entry.body, visibility: entry.visibility })
     setModalOpen(true)
   }
 
   const onSave = (data) => {
+    const payload = {
+      body: data.body,
+      visibility: data.visibility,
+      feeling_ids: selectedFeelingIds,
+    }
     if (editingId) {
       updateEntry.mutate(
-        { id: editingId, body: data.body, visibility: data.visibility },
-        { onSuccess: () => setModalOpen(false) }
+        { id: editingId, ...payload },
+        { onSuccess: () => { setModalOpen(false); setSelectedFeelingIds([]) } }
       )
     } else {
       createEntry.mutate(
-        { body: data.body, visibility: data.visibility },
-        { onSuccess: () => setModalOpen(false) }
+        payload,
+        { onSuccess: () => { setModalOpen(false); setSelectedFeelingIds([]) } }
       )
     }
   }
 
-  const formatDate = (d) => new Date(d).toLocaleDateString('es-ES', { dateStyle: 'long' })
+  const closeModal = () => {
+    setModalOpen(false)
+    setSelectedFeelingIds([])
+  }
 
   if (isLoading) return <div className={styles.loading}>Cargando entradas…</div>
   if (error) return <div className={styles.error}>Error al cargar el diario.</div>
@@ -103,8 +115,8 @@ export default function PatientJournalPage() {
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />
-        <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} placeholder="Desde" />
-        <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} placeholder="Hasta" />
+        <input type="date" lang="es-CL" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} placeholder="Desde" />
+        <input type="date" lang="es-CL" value={dateTo} onChange={(e) => setDateTo(e.target.value)} placeholder="Hasta" />
         <select
           value={visibilityFilter}
           onChange={(e) => setVisibilityFilter(e.target.value)}
@@ -122,7 +134,7 @@ export default function PatientJournalPage() {
           entries.map((entry) => (
             <Card key={entry.id} padding="md" clickable onClick={() => openEdit(entry)}>
               <div className={styles.entryMeta}>
-                <time>{formatDate(entry.created_at)}</time>
+                <time>{formatDateLong(entry.created_at)}</time>
                 <Badge variant={entry.visibility === 'shareable' ? 'shareable' : 'private'}>
                   {entry.visibility === 'shareable' ? 'Compartible' : 'Privada'}
                 </Badge>
@@ -130,13 +142,29 @@ export default function PatientJournalPage() {
               <p className={styles.entryBody}>
                 {entry.body.length > 100 ? `${entry.body.slice(0, 100)}…` : entry.body}
               </p>
+              {entry.feelings?.length > 0 && (
+                <div className={styles.entryFeelings}>
+                  {entry.feelings.map((ef) => (
+                    <span
+                      key={ef.id}
+                      className={styles.feelingPill}
+                      style={{
+                        backgroundColor: (ef.feeling?.color || '#8a827a') + '25',
+                        borderColor: (ef.feeling?.color || '#8a827a') + '99',
+                      }}
+                    >
+                      {ef.feeling?.emoji} {ef.feeling?.title}
+                    </span>
+                  ))}
+                </div>
+              )}
             </Card>
           ))
         )}
       </div>
       <Modal
         isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
+        onClose={closeModal}
         title={editingId ? 'Editar entrada' : 'Nueva entrada'}
       >
         <form onSubmit={handleSubmit(onSave)}>
@@ -147,6 +175,16 @@ export default function PatientJournalPage() {
               error={errors.body?.message}
               rows={6}
               autoResize
+            />
+          </div>
+          <div className={styles.feelingSection}>
+            <label className={styles.feelingLabel}>
+              ¿Cómo te sientes?
+              <span className={styles.optional}>(opcional)</span>
+            </label>
+            <FeelingSelector
+              selectedIds={selectedFeelingIds}
+              onChange={setSelectedFeelingIds}
             />
           </div>
           <div className={styles.visibilityRow}>
@@ -161,7 +199,7 @@ export default function PatientJournalPage() {
             </label>
           </div>
           <div className={styles.modalActions}>
-            <Button type="button" variant="ghost" onClick={() => setModalOpen(false)}>
+            <Button type="button" variant="ghost" onClick={closeModal}>
               Cancelar
             </Button>
             <Button

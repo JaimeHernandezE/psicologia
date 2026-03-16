@@ -1,0 +1,37 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  margin-bottom: $space-4;
+  color: $color-neutral-600;
+  font-size: $font-size-sm;
+  text-decoration: none;
+
+  &:hover {
+    color: $color-primary-dark;
+  }
+}
+
+.title {
+  font-family: $font-family-display;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-regular;
+  color: $color-neutral-800;
+  margin-bottom: $space-6;
+}
+
+.error {
+  color: $color-danger;
+  margin-top: $space-4;
+}
+
+.summaryCardEmoji {
+  font-size: 1.5rem;
+}
+
+.feelingBars {
+  margin-bottom: $space-6;
+}

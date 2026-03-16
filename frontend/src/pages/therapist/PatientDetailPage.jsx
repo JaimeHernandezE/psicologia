@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { ArrowLeft, Plus, ChevronDown, ChevronRight } from 'lucide-react'
+import { ArrowLeft, Plus, ChevronDown, ChevronRight, BarChart3 } from 'lucide-react'
 import { Button, Card, Input, Textarea, Badge } from '../../components/ui'
 import { useLink } from '../../hooks/useLinks'
 import { useSummariesList } from '../../hooks/useSummaries'
@@ -12,6 +12,7 @@ import {
   useTaskCreate,
 } from '../../hooks/useTasks'
 import { useStandardSearch, useAiSearch } from '../../hooks/useSearch'
+import { formatDate, formatDateTime } from '../../utils/dates'
 import styles from './PatientDetailPage.module.scss'
 
 const taskSchema = z.object({
@@ -177,9 +178,6 @@ export default function TherapistPatientDetailPage() {
   const summaryContent = (s) =>
     (s.body_edited && s.body_edited.trim()) ? s.body_edited : (s.body_ai ?? '')
 
-  const formatDate = (d) =>
-    d ? new Date(d).toLocaleString('es-ES', { dateStyle: 'medium', timeStyle: 'short' }) : '—'
-
   const patientName = link?.patient?.user?.email ?? `Paciente #${linkId}`
 
   if (linkLoading) return <div className={styles.loading}>Cargando…</div>
@@ -191,7 +189,18 @@ export default function TherapistPatientDetailPage() {
         <ArrowLeft size={18} />
         Volver a Pacientes
       </Link>
-      <h1 className={styles.title}>{patientName}</h1>
+      <div className={styles.titleRow}>
+        <h1 className={styles.title}>{patientName}</h1>
+        {link?.patient?.id && (
+          <Link
+            to={`/app/therapist/analytics/${link.patient.id}`}
+            className={styles.analyticsLink}
+          >
+            <BarChart3 size={18} />
+            Ver análisis
+          </Link>
+        )}
+      </div>
 
       <div className={styles.tabs}>
         {tabs.map((tab) => (
@@ -228,7 +237,7 @@ export default function TherapistPatientDetailPage() {
                     role="button"
                     tabIndex={0}
                   >
-                    <span>Enviado: {formatDate(s.sent_at)}</span>
+                    <span>Enviado: {formatDateTime(s.sent_at)}</span>
                     <span>{expandedSummaryId === s.id ? '▼' : '▶'}</span>
                   </div>
                   {expandedSummaryId === s.id && (
@@ -263,6 +272,7 @@ export default function TherapistPatientDetailPage() {
                   <Input
                     label="Fecha límite (opcional)"
                     type="date"
+                    lang="es-CL"
                     {...register('due_date')}
                   />
                 </div>
@@ -335,8 +345,8 @@ export default function TherapistPatientDetailPage() {
                   value={searchKeyword}
                   onChange={(e) => setSearchKeyword(e.target.value)}
                 />
-                <input type="date" placeholder="Desde" value={searchDateFrom} onChange={(e) => setSearchDateFrom(e.target.value)} />
-                <input type="date" placeholder="Hasta" value={searchDateTo} onChange={(e) => setSearchDateTo(e.target.value)} />
+                <input type="date" lang="es-CL" placeholder="Desde" value={searchDateFrom} onChange={(e) => setSearchDateFrom(e.target.value)} />
+                <input type="date" lang="es-CL" placeholder="Hasta" value={searchDateTo} onChange={(e) => setSearchDateTo(e.target.value)} />
                 <select
                   value={searchScope}
                   onChange={(e) => setSearchScope(e.target.value)}
@@ -360,7 +370,7 @@ export default function TherapistPatientDetailPage() {
                       <li key={i} className="resultItem">
                         <div className="resultItemMeta">
                           <Badge variant="in_progress">{r.type}</Badge>
-                          <span>{formatDate(r.date)}</span>
+                          <span>{formatDateTime(r.date)}</span>
                         </div>
                         <div className="resultItemExcerpt">{highlightText(r.excerpt, searchKeyword)}</div>
                       </li>

@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import { Card, Button, Textarea, Badge } from '../../components/ui'
 import { useTasksList, useTaskProgressUpdate } from '../../hooks/useTasks'
+import { formatDate } from '../../utils/dates'
 import styles from './TasksPage.module.scss'
 
 const statusVariant = { pending: 'pending', in_progress: 'in_progress', done: 'done' }
@@ -52,8 +53,6 @@ export default function PatientTasksPage() {
       note: note[task.id] ?? prog.note,
     })
   }
-
-  const formatDate = (d) => (d ? new Date(d).toLocaleDateString('es-ES', { dateStyle: 'medium' }) : '—')
 
   if (isLoading) return <div className={styles.loading}>Cargando tareas…</div>
   if (error) return <div className={styles.error}>Error al cargar las tareas.</div>

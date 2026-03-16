@@ -54,7 +54,7 @@ class TherapistProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TherapistProfile
-        fields = ("id", "user", "license_number", "bio", "chat_instructions_default")
+        fields = ("id", "user", "license_number", "bio", "chat_instructions_default", "date_format")
 
 
 class PatientProfileSerializer(serializers.ModelSerializer):
@@ -62,4 +62,4 @@ class PatientProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PatientProfile
-        fields = ("id", "user", "onboarded_at")
+        fields = ("id", "user", "onboarded_at", "date_format")

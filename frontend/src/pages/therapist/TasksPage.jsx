@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useTasksList } from '../../hooks/useTasks'
 import { useLinksList } from '../../hooks/useLinks'
 import { Card, Badge } from '../../components/ui'
+import { formatDate } from '../../utils/dates'
 import styles from './TasksPage.module.scss'
 
 const statusLabel = { pending: 'Pendiente', in_progress: 'En progreso', done: 'Completada' }
@@ -31,9 +32,6 @@ export default function TherapistTasksPage() {
   links.forEach((l) => { linkById[l.id] = l })
   const patientName = (linkId) =>
     linkById[linkId]?.patient?.user?.email ?? `Paciente #${linkId}`
-
-  const formatDate = (d) =>
-    d ? new Date(d).toLocaleDateString('es-ES', { dateStyle: 'medium' }) : '—'
 
   if (isLoading) return <div className={styles.loading}>Cargando tareas…</div>
   if (error) return <div className={styles.error}>Error al cargar las tareas.</div>

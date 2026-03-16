@@ -9,6 +9,7 @@ import { useGroup, useAddGroupMember, useRemoveGroupMember, useGroupSummaries, u
 import { useLinksList } from '../../hooks/useLinks'
 import { useTasksList, useTaskCreate } from '../../hooks/useTasks'
 import { useAiSearch } from '../../hooks/useSearch'
+import { formatDate, formatDateTime } from '../../utils/dates'
 import styles from './GroupDetailPage.module.scss'
 
 const taskSchema = z.object({
@@ -86,8 +87,6 @@ export default function TherapistGroupDetailPage() {
       { onSuccess: () => reset() }
     )
   }
-
-  const formatDate = (d) => (d ? new Date(d).toLocaleDateString('es-ES', { dateStyle: 'medium' }) : '—')
 
   const handleAiConsult = () => {
     if (!aiQuery.trim()) return
@@ -190,7 +189,7 @@ export default function TherapistGroupDetailPage() {
                 <Textarea label="Descripción (opcional)" {...register('description')} rows={2} />
               </div>
               <div className={styles.formRow}>
-                <Input label="Fecha límite (opcional)" type="date" {...register('due_date')} />
+                <Input label="Fecha límite (opcional)" type="date" lang="es-CL" {...register('due_date')} />
               </div>
               <div className={styles.formActions}>
                 <Button type="submit" variant="primary" size="sm" disabled={createTask.isPending}>
@@ -246,7 +245,7 @@ export default function TherapistGroupDetailPage() {
                         checked={selectedSummaryIds.includes(s.id)}
                         onChange={() => toggleSummarySelection(s.id)}
                       />
-                      {formatDate(s.sent_at)} — {(s.body_edited || s.body_ai || '').slice(0, 80)}…
+                      {formatDateTime(s.sent_at)} — {(s.body_edited || s.body_ai || '').slice(0, 80)}…
                     </label>
                   ))}
                 </div>
@@ -276,7 +275,7 @@ export default function TherapistGroupDetailPage() {
                 return (
                   <div key={gs.id} className={styles.groupSummaryCard}>
                     <p className={styles.groupSummaryMeta}>
-                      Creado: {formatDate(gs.created_at)}
+                      Creado: {formatDateTime(gs.created_at)}
                     </p>
                     <Textarea
                       value={currentBody}

@@ -8,6 +8,7 @@ import {
   useSummaryUpdate,
   useSummarySend,
 } from '../../hooks/useSummaries'
+import { formatDateTime } from '../../utils/dates'
 import styles from './SummaryPage.module.scss'
 
 const SEND_UNDO_SECONDS = 15
@@ -87,11 +88,6 @@ export default function PatientSummaryPage() {
       },
     })
   }
-
-  const formatDate = (d) =>
-    d ? new Date(d).toLocaleString('es-ES', { dateStyle: 'medium', timeStyle: 'short' }) : '—'
-
-  const formatSentDate = (s) => formatDate(s.sent_at)
 
   if (entriesLoading) return <div className={styles.loading}>Cargando…</div>
 
@@ -201,7 +197,7 @@ export default function PatientSummaryPage() {
               .sort((a, b) => new Date(b.sent_at) - new Date(a.sent_at))
               .map((s) => (
                 <Card key={s.id} padding="md" className={styles.sentItem}>
-                  <p className={styles.sentMeta}>Enviado: {formatSentDate(s)}</p>
+                  <p className={styles.sentMeta}>Enviado: {formatDateTime(s.sent_at)}</p>
                   <div className={styles.sentContent}>{summaryContent(s) || '—'}</div>
                 </Card>
               ))}

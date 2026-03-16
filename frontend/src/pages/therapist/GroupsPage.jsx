@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { Plus } from 'lucide-react'
 import { Button, Card, Modal, Input } from '../../components/ui'
 import { useGroupsList, useCreateGroup } from '../../hooks/useGroups'
+import { formatDate } from '../../utils/dates'
 import styles from './GroupsPage.module.scss'
 
 const schema = z.object({ name: z.string().min(1, 'Nombre obligatorio') })
@@ -28,8 +29,6 @@ export default function TherapistGroupsPage() {
       },
     })
   }
-
-  const formatDate = (d) => (d ? new Date(d).toLocaleDateString('es-ES', { dateStyle: 'medium' }) : '—')
 
   if (isLoading) return <div className={styles.loading}>Cargando grupos…</div>
   if (error) return <div className={styles.error}>Error al cargar los grupos.</div>

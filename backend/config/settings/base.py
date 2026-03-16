@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "apps.notifications",
     "apps.search",
     "apps.feelings",
+    "apps.analytics",
 ]
 
 MIDDLEWARE = [
@@ -82,10 +83,10 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Custom user
 AUTH_USER_MODEL = "users.User"
 
-# Database - PostgreSQL
+# Database - TimescaleDB (PostgreSQL 16 compatible)
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "timescale.db.backends.postgresql",
         "NAME": config("DB_NAME", default="psicologia"),
         "USER": config("DB_USER", default="postgres"),
         "PASSWORD": config("DB_PASSWORD", default=""),

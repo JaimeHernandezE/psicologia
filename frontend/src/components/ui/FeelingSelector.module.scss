@@ -1,0 +1,44 @@
+@use '../../styles/abstracts/variables' as *;
+
+.wrapper {
+  min-height: 44px;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: $space-1 $space-2;
+  border-radius: $border-radius-full;
+  border: 1px solid transparent;
+  font-size: $font-size-sm;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-width $transition-fast, background-color $transition-fast;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.pillSelected {
+  font-weight: $font-weight-medium;
+}
+
+.pillSkeleton {
+  display: inline-block;
+  width: 80px;
+  height: 32px;
+  border-radius: $border-radius-full;
+  background: $color-neutral-200;
+}
+
+.emoji {
+  font-size: 1em;
+}

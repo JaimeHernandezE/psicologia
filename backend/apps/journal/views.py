@@ -17,7 +17,9 @@ class JournalEntryViewSet(viewsets.ModelViewSet):
     ordering = ["-created_at"]
 
     def get_queryset(self):
-        qs = JournalEntry.objects.filter(patient__user=self.request.user)
+        qs = JournalEntry.objects.filter(patient__user=self.request.user).prefetch_related(
+            "journal_entry_feelings__feeling"
+        )
         group_id = self.request.query_params.get("group_id")
         if group_id:
             try:

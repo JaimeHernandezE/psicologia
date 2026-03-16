@@ -1,8 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { Chart, registerables } from 'chart.js'
 import App from './App.jsx'
 import './styles/main.scss'
+
+Chart.register(...registerables)
 
 const queryClient = new QueryClient({
   defaultOptions: {

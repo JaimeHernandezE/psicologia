@@ -14,10 +14,12 @@ urlpatterns = [
     path("api/links/", include("apps.links.urls")),
     path("api/groups/", include("apps.links.groups_urls")),
     path("api/journal/", include("apps.journal.urls")),
+    path("api/feelings/", include("apps.feelings.urls")),
     path("api/summaries/", include("apps.summaries.urls")),
     path("api/tasks/", include("apps.tasks.urls")),
     path("api/notifications/", include("apps.notifications.urls")),
     path("api/search/", include("apps.search.urls")),
+    path("api/analytics/", include("apps.analytics.urls")),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 ]
 

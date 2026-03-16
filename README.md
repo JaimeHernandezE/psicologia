@@ -2,9 +2,22 @@
 
 Estructura:
 
-- **backend/** — Django 5 + DRF + PostgreSQL
+- **backend/** — Django 5 + DRF + PostgreSQL (TimescaleDB)
 - **frontend/** — React + Vite
 - **shared/** — utilidades compartidas
+
+### Base de datos (TimescaleDB)
+
+La base de datos usa **PostgreSQL con extensión TimescaleDB** (imagen `timescale/timescaledb:latest-pg16`). La app `analytics` guarda métricas en hypertables; las migraciones ya contemplan los requisitos de TimescaleDB (clave primaria y índices únicos que incluyen la columna de partición por tiempo). En un **despliegue nuevo** (DB vacía), `docker compose up` + `migrate` es suficiente y no requiere pasos extra.
+
+**Si en algún entorno la migración `analytics.0002_convert_to_hypertables` falló a medias:** revertir y volver a aplicar:
+
+```bash
+docker compose exec backend python manage.py migrate analytics 0001_initial
+docker compose exec backend python manage.py migrate
+```
+
+Para despliegue en otros entornos, variables de entorno y checklist de producción, ver **[DEPLOYMENT.md](DEPLOYMENT.md)**.
 
 ## Levantar el proyecto por primera vez (Docker)
 

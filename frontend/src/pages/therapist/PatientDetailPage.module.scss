@@ -15,12 +15,39 @@
   }
 }
 
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  margin-bottom: $space-6;
+  flex-wrap: wrap;
+}
+
 .title {
   font-family: $font-family-display;
   font-size: $font-size-2xl;
   font-weight: $font-weight-regular;
   color: $color-neutral-800;
-  margin-bottom: $space-6;
+  margin: 0;
+}
+
+.analyticsLink {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-4;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-primary-dark;
+  background: $color-primary-bg;
+  border-radius: $border-radius-md;
+  text-decoration: none;
+  transition: background $transition-fast, color $transition-fast;
+
+  &:hover {
+    background: $color-primary-light;
+    color: #fff;
+  }
 }
 
 .tabs {

@@ -1,10 +1,11 @@
 services:
   db:
-    image: postgres:16
+    image: timescale/timescaledb:latest-pg16
     environment:
       POSTGRES_DB: ${DB_NAME:-psicologia}
       POSTGRES_USER: ${DB_USER:-postgres}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      TIMESCALEDB_TELEMETRY: "off"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:

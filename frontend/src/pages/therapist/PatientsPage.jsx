@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { UserPlus } from 'lucide-react'
 import { Button, Card, Modal, Input, Badge } from '../../components/ui'
 import { useLinksList, useLinkInvite } from '../../hooks/useLinks'
+import { formatDate } from '../../utils/dates'
 import styles from './PatientsPage.module.scss'
 
 const schema = z.object({
@@ -118,7 +119,7 @@ export default function TherapistPatientsPage() {
                     {patientName(link)}
                   </Link>
                   <p className={styles.linkMeta}>
-                    Invitado: {link.invited_at ? new Date(link.invited_at).toLocaleDateString('es-ES') : '—'}
+                    Invitado: {link.invited_at ? formatDate(link.invited_at) : '—'}
                   </p>
                 </div>
                 <Badge variant={statusVariant[link.status] ?? 'pending'}>

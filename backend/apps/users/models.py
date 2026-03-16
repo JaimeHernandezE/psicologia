@@ -37,6 +37,11 @@ class User(AbstractUser):
 class TherapistProfile(models.Model):
     """Perfil del terapeuta/tratante."""
 
+    class DateFormat(models.TextChoices):
+        DDMMYYYY = "dd/mm/yyyy", "dd/mm/aaaa"
+        MMDDYYYY = "mm/dd/yyyy", "mm/dd/aaaa"
+        YYYYMMDD = "yyyy-mm-dd", "aaaa-mm-dd"
+
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
@@ -48,6 +53,11 @@ class TherapistProfile(models.Model):
     chat_instructions_default = models.TextField(
         blank=True,
         help_text="Instrucciones base para Claude en el chat",
+    )
+    date_format = models.CharField(
+        max_length=10,
+        choices=DateFormat.choices,
+        default=DateFormat.DDMMYYYY,
     )
 
     def __str__(self):
@@ -62,6 +72,11 @@ class TherapistProfile(models.Model):
 class PatientProfile(models.Model):
     """Perfil del paciente."""
 
+    class DateFormat(models.TextChoices):
+        DDMMYYYY = "dd/mm/yyyy", "dd/mm/aaaa"
+        MMDDYYYY = "mm/dd/yyyy", "mm/dd/aaaa"
+        YYYYMMDD = "yyyy-mm-dd", "aaaa-mm-dd"
+
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
@@ -69,6 +84,13 @@ class PatientProfile(models.Model):
         limit_choices_to={"role": User.Role.PATIENT},
     )
     onboarded_at = models.DateTimeField(null=True, blank=True)
+    research_consent = models.BooleanField(default=False)
+    research_consent_date = models.DateTimeField(null=True, blank=True)
+    date_format = models.CharField(
+        max_length=10,
+        choices=DateFormat.choices,
+        default=DateFormat.DDMMYYYY,
+    )
 
     def __str__(self):
         return f"Paciente: {self.user.get_full_name() or self.user.email}"

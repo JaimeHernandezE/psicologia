@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Card } from '../../components/ui'
 import { usePendingInvitations, useAcceptInvitation } from '../../hooks/useLinks'
+import { formatDateLong } from '../../utils/dates'
 import styles from './InvitationsPage.module.scss'
 
 function therapistDisplayName(link) {
@@ -30,9 +31,6 @@ export default function InvitationsPage() {
       },
     })
   }
-
-  const formatDate = (d) =>
-    d ? new Date(d).toLocaleDateString('es-ES', { dateStyle: 'long' }) : '—'
 
   if (isLoading) return <div className={styles.loading}>Cargando invitaciones…</div>
   if (error) return <div className={styles.error}>Error al cargar las invitaciones.</div>
@@ -66,7 +64,7 @@ export default function InvitationsPage() {
                 </Button>
               </div>
               <p className={styles.meta}>
-                Invitación enviada el {formatDate(link.invited_at)}
+                Invitación enviada el {formatDateLong(link.invited_at)}
               </p>
             </Card>
           ))}

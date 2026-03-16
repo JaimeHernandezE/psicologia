@@ -59,6 +59,41 @@
   margin-bottom: $space-4;
 }
 
+.feelingSection {
+  margin-top: $space-4;
+}
+
+.feelingLabel {
+  display: block;
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+  margin-bottom: $space-2;
+}
+
+.optional {
+  font-weight: $font-weight-regular;
+  color: $color-neutral-400;
+  margin-left: $space-1;
+}
+
+.entryFeelings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-1;
+  margin-top: $space-2;
+}
+
+.feelingPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px $space-2;
+  border-radius: $border-radius-full;
+  border: 1px solid;
+  font-size: $font-size-xs;
+  white-space: nowrap;
+}
+
 .visibilityRow {
   display: flex;
   align-items: center;
