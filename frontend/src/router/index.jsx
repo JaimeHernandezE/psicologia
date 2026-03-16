@@ -7,11 +7,14 @@ import PatientDashboardPage from '../pages/patient/DashboardPage'
 import PatientJournalPage from '../pages/patient/JournalPage'
 import PatientTasksPage from '../pages/patient/TasksPage'
 import PatientSummaryPage from '../pages/patient/SummaryPage'
+import PatientGroupPage from '../pages/patient/GroupPage'
 import PatientInvitationsPage from '../pages/patient/InvitationsPage'
 import TherapistDashboardPage from '../pages/therapist/DashboardPage'
 import TherapistPatientsPage from '../pages/therapist/PatientsPage'
 import TherapistPatientDetailPage from '../pages/therapist/PatientDetailPage'
 import TherapistTasksPage from '../pages/therapist/TasksPage'
+import TherapistGroupsPage from '../pages/therapist/GroupsPage'
+import TherapistGroupDetailPage from '../pages/therapist/GroupDetailPage'
 import { PageWrapper } from '../components/layout/PageWrapper'
 
 function ProtectedRoute({ children, role }) {
@@ -45,6 +48,7 @@ export const router = createBrowserRouter([
       { path: 'journal', element: <PatientJournalPage /> },
       { path: 'tasks', element: <PatientTasksPage /> },
       { path: 'summary', element: <PatientSummaryPage /> },
+      { path: 'groups/:id', element: <PatientGroupPage /> },
     ],
   },
   {
@@ -59,6 +63,8 @@ export const router = createBrowserRouter([
       { path: 'patients', element: <TherapistPatientsPage /> },
       { path: 'patients/:linkId', element: <TherapistPatientDetailPage /> },
       { path: 'tasks', element: <TherapistTasksPage /> },
+      { path: 'groups', element: <TherapistGroupsPage /> },
+      { path: 'groups/:id', element: <TherapistGroupDetailPage /> },
     ],
   },
   { path: '/', element: <Navigate to="/login" replace /> },

@@ -11,6 +11,7 @@ class Group(models.Model):
     )
     name = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.name} ({self.therapist})"
@@ -35,6 +36,7 @@ class GroupMembership(models.Model):
         related_name="group_memberships",
     )
     joined_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.patient} en {self.group}"

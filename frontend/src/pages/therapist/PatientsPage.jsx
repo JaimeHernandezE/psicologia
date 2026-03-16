@@ -12,10 +12,27 @@ const schema = z.object({
   email: z.string().email('Email no válido'),
 })
 
+const STATUS_OPTIONS = [
+  { value: '', label: 'Todos' },
+  { value: 'active', label: 'Activo' },
+  { value: 'pending', label: 'Pendiente' },
+  { value: 'paused', label: 'Pausado' },
+  { value: 'ended', label: 'Finalizado' },
+]
+
 export default function TherapistPatientsPage() {
   const [modalOpen, setModalOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [statusFilter, setStatusFilter] = useState('')
   const { data: links = [], isLoading, error } = useLinksList()
   const inviteMutation = useLinkInvite()
+
+  const filteredLinks = links.filter((link) => {
+    const name = (link.patient?.user?.email ?? '').toLowerCase()
+    const matchSearch = !searchQuery.trim() || name.includes(searchQuery.trim().toLowerCase())
+    const matchStatus = !statusFilter || link.status === statusFilter
+    return matchSearch && matchStatus
+  })
 
   const {
     register,
@@ -64,13 +81,32 @@ export default function TherapistPatientsPage() {
           Invitar paciente
         </Button>
       </div>
+      <div className="searchBar filterRow" style={{ marginBottom: 16 }}>
+        <input
+          type="search"
+          placeholder="Buscar por nombre o email"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          style={{ padding: '8px 12px', borderRadius: 8 }}
+        >
+          {STATUS_OPTIONS.map((o) => (
+            <option key={o.value || 'all'} value={o.value}>{o.label}</option>
+          ))}
+        </select>
+      </div>
       <div className={styles.list}>
-        {links.length === 0 ? (
+        {filteredLinks.length === 0 ? (
           <p className={styles.empty}>
-            Aún no has invitado a ningún paciente. Usa &quot;Invitar paciente&quot; para añadir uno.
+            {links.length === 0
+              ? 'Aún no has invitado a ningún paciente. Usa "Invitar paciente" para añadir uno.'
+              : 'Ningún paciente coincide con los filtros.'}
           </p>
         ) : (
-          links.map((link) => (
+          filteredLinks.map((link) => (
             <div key={link.id} className={styles.row}>
               <div className={styles.rowLeft}>
                 <div>

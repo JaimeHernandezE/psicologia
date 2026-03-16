@@ -1,8 +1,8 @@
 import { apiClient } from './client'
 
 export const tasksApi = {
-  list: () =>
-    apiClient.get('/api/tasks/').then((r) => r.data),
+  list: (params) =>
+    apiClient.get('/api/tasks/', { params }).then((r) => r.data),
 
   get: (id) =>
     apiClient.get(`/api/tasks/${id}/`).then((r) => r.data),

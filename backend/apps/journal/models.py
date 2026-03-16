@@ -13,6 +13,13 @@ class JournalEntry(models.Model):
         on_delete=models.CASCADE,
         related_name="journal_entries",
     )
+    group = models.ForeignKey(
+        "links.Group",
+        on_delete=models.CASCADE,
+        related_name="journal_entries",
+        null=True,
+        blank=True,
+    )
     body = models.TextField()
     visibility = models.CharField(
         max_length=20,

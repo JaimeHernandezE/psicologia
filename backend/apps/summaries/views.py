@@ -2,6 +2,7 @@ from django.db import transaction
 from django.utils import timezone
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
+from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema, extend_schema_view
 
@@ -23,6 +24,10 @@ from .serializers import SummarySerializer, SummaryCreateSerializer
 class SummaryViewSet(viewsets.ModelViewSet):
     serializer_class = SummarySerializer
     permission_classes = [IsTherapistOrPatient]
+    filter_backends = [OrderingFilter, SearchFilter]
+    search_fields = ["body_ai", "body_edited"]
+    ordering_fields = ["sent_at", "created_at"]
+    ordering = ["-sent_at"]
 
     def _therapist_queryset(self):
         return Summary.objects.filter(link__therapist__user=self.request.user).select_related("link")
@@ -34,6 +39,20 @@ class SummaryViewSet(viewsets.ModelViewSet):
         if self.request.user.role == User.Role.THERAPIST:
             return self._therapist_queryset().filter(is_sent=True)
         return self._patient_queryset()
+
+    def filter_queryset(self, queryset):
+        qs = super().filter_queryset(queryset)
+        if self.request.user.role == User.Role.THERAPIST:
+            patient_id = self.request.query_params.get("patient_id")
+            if patient_id:
+                qs = qs.filter(link__patient_id=patient_id)
+            date_from = self.request.query_params.get("date_from")
+            if date_from:
+                qs = qs.filter(sent_at__date__gte=date_from)
+            date_to = self.request.query_params.get("date_to")
+            if date_to:
+                qs = qs.filter(sent_at__date__lte=date_to)
+        return qs
 
     def get_permissions(self):
         if self.action in ("generate", "send"):

@@ -1,0 +1,230 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  margin-bottom: $space-4;
+  color: $color-neutral-600;
+  font-size: $font-size-sm;
+  text-decoration: none;
+
+  &:hover {
+    color: $color-primary-dark;
+  }
+}
+
+.header {
+  margin-bottom: $space-4;
+}
+
+.title {
+  font-family: $font-family-display;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-regular;
+  color: $color-neutral-800;
+  margin-bottom: $space-2;
+}
+
+.members {
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+  margin-bottom: $space-4;
+}
+
+.tabs {
+  display: flex;
+  gap: $space-1;
+  margin-bottom: $space-6;
+  border-bottom: 1px solid $border-color;
+}
+
+.tab {
+  padding: $space-2 $space-4;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-600;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  transition: color $transition-fast, border-color $transition-fast;
+
+  &:hover {
+    color: $color-neutral-800;
+  }
+
+  &.active {
+    color: $color-primary-dark;
+    border-bottom-color: $color-primary;
+  }
+}
+
+.panel {
+  padding-top: $space-4;
+}
+
+.loading,
+.empty {
+  text-align: center;
+  padding: $space-8;
+  color: $color-neutral-600;
+}
+
+.error {
+  padding: $space-3;
+  font-size: $font-size-sm;
+  color: $color-danger;
+  background: $color-danger-light;
+  border-radius: $border-radius-md;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-800;
+  margin-bottom: $space-4;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.entryMeta {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  margin-bottom: $space-2;
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+}
+
+.entryBody {
+  font-size: $font-size-base;
+  color: $color-neutral-800;
+  line-height: 1.5;
+}
+
+.formRow,
+.visibilityRow,
+.modalActions {
+  margin-bottom: $space-4;
+}
+
+.visibilityLabel {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-800;
+}
+
+.taskHeader {
+  @include flex-between;
+  margin-bottom: $space-2;
+}
+
+.taskTitle {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-800;
+}
+
+.taskMeta {
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+}
+
+.expanded {
+  margin-top: $space-4;
+  padding-top: $space-4;
+  border-top: 1px solid $border-color;
+}
+
+.expandedLabel {
+  display: block;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-800;
+  margin-bottom: $space-2;
+}
+
+.expandedActions {
+  margin-top: $space-3;
+}
+
+.task {
+  cursor: pointer;
+}
+
+.generateBlock,
+.sendBlock {
+  margin-top: $space-4;
+}
+
+.entryList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  margin-bottom: $space-4;
+}
+
+.entryItem {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-2;
+  cursor: pointer;
+}
+
+.entryPreview {
+  font-size: $font-size-sm;
+  color: $color-neutral-800;
+}
+
+.resultBlock {
+  margin-top: $space-6;
+}
+
+.resultLabel {
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+  margin-bottom: $space-2;
+}
+
+.resultTextarea {
+  margin-bottom: $space-3;
+}
+
+.sentList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.sentItem {
+  margin-top: $space-2;
+}
+
+.sentMeta {
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+  margin-bottom: $space-2;
+}
+
+.sentContent {
+  font-size: $font-size-base;
+  color: $color-neutral-800;
+  white-space: pre-wrap;
+}
+
+.undoCountdown {
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+  margin-left: $space-3;
+}
+
+.section {
+  margin-bottom: $space-6;
+}

@@ -1,3 +1,4 @@
+import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useTasksList } from '../../hooks/useTasks'
 import { useLinksList } from '../../hooks/useLinks'
@@ -6,9 +7,24 @@ import styles from './TasksPage.module.scss'
 
 const statusLabel = { pending: 'Pendiente', in_progress: 'En progreso', done: 'Completada' }
 const statusVariant = { pending: 'pending', in_progress: 'in_progress', done: 'done' }
+const STATUS_OPTIONS = [
+  { value: '', label: 'Todas' },
+  { value: 'pending', label: 'Pendiente' },
+  { value: 'in_progress', label: 'En progreso' },
+  { value: 'done', label: 'Completada' },
+]
 
 export default function TherapistTasksPage() {
-  const { data: tasks = [], isLoading, error } = useTasksList()
+  const [searchInput, setSearchInput] = useState('')
+  const [statusFilter, setStatusFilter] = useState('')
+  const taskParams = useMemo(
+    () => ({
+      ...(searchInput.trim() && { search: searchInput.trim() }),
+      ...(statusFilter && { status: statusFilter }),
+    }),
+    [searchInput, statusFilter]
+  )
+  const { data: tasks = [], isLoading, error } = useTasksList(taskParams)
   const { data: links = [] } = useLinksList()
 
   const linkById = {}
@@ -25,6 +41,23 @@ export default function TherapistTasksPage() {
   return (
     <div className="pageContent">
       <h1 className={styles.title}>Tareas</h1>
+      <div className="searchBar filterRow" style={{ marginBottom: 16 }}>
+        <input
+          type="search"
+          placeholder="Buscar por título"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+        />
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          style={{ padding: '8px 12px', borderRadius: 8 }}
+        >
+          {STATUS_OPTIONS.map((o) => (
+            <option key={o.value || 'all'} value={o.value}>{o.label}</option>
+          ))}
+        </select>
+      </div>
       <div className={styles.list}>
         {tasks.length === 0 ? (
           <p className={styles.empty}>

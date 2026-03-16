@@ -1,10 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { tasksApi } from '../api/tasks'
 
-export function useTasksList() {
+export function useTasksList(params) {
   return useQuery({
-    queryKey: ['tasks'],
-    queryFn: tasksApi.list,
+    queryKey: ['tasks', params],
+    queryFn: () => tasksApi.list(params),
   })
 }
 

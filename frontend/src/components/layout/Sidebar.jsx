@@ -5,9 +5,11 @@ import {
   ListTodo,
   FileText,
   Users,
+  UsersRound,
   Mail,
 } from 'lucide-react'
 import { useLinksList } from '../../hooks/useLinks'
+import { usePatientGroups } from '../../hooks/useGroups'
 
 const patientNav = [
   { to: '/app/patient', icon: LayoutDashboard, label: 'Inicio' },
@@ -19,13 +21,16 @@ const patientNav = [
 const therapistNav = [
   { to: '/app/therapist', icon: LayoutDashboard, label: 'Inicio' },
   { to: '/app/therapist/patients', icon: Users, label: 'Pacientes' },
+  { to: '/app/therapist/groups', icon: UsersRound, label: 'Grupos' },
   { to: '/app/therapist/tasks', icon: ListTodo, label: 'Tareas' },
 ]
 
 export function Sidebar({ role }) {
   const { data: links = [] } = useLinksList()
+  const { data: patientGroups = [] } = usePatientGroups()
   const pendingCount = role === 'patient' ? (links || []).filter((l) => l.status === 'pending').length : 0
   const nav = role === 'patient' ? patientNav : therapistNav
+  const hasGroups = role === 'patient' && (patientGroups || []).length > 0
 
   return (
     <aside className="sidebar">
@@ -51,6 +56,22 @@ export function Sidebar({ role }) {
             Invitaciones
             <span className="sidebarBadge">{pendingCount}</span>
           </NavLink>
+        )}
+        {hasGroups && (
+          <>
+            <div className="sidebarSectionLabel">Grupos</div>
+            {(patientGroups || []).map((g) => (
+              <NavLink
+                key={g.id}
+                to={`/app/patient/groups/${g.id}`}
+                end={false}
+                className={({ isActive }) => `sidebarLink sidebarLinkGroup ${isActive ? 'active' : ''}`}
+              >
+                <UsersRound size={18} />
+                {g.name}
+              </NavLink>
+            ))}
+          </>
         )}
       </nav>
     </aside>

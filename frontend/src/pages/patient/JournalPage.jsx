@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -6,6 +6,13 @@ import { Plus } from 'lucide-react'
 import { Button, Card, Modal, Textarea, Badge } from '../../components/ui'
 import { useJournalList, useJournalCreate, useJournalUpdate } from '../../hooks/useJournal'
 import styles from './JournalPage.module.scss'
+
+const DEBOUNCE_MS = 400
+const VISIBILITY_OPTIONS = [
+  { value: '', label: 'Todas' },
+  { value: 'private', label: 'Privadas' },
+  { value: 'shareable', label: 'Compartibles' },
+]
 
 const schema = z.object({
   body: z.string().min(1, 'Escribe algo'),
@@ -15,7 +22,27 @@ const schema = z.object({
 export default function PatientJournalPage() {
   const [modalOpen, setModalOpen] = useState(false)
   const [editingId, setEditingId] = useState(null)
-  const { data: entries = [], isLoading, error } = useJournalList()
+  const [searchInput, setSearchInput] = useState('')
+  const [debouncedSearch, setDebouncedSearch] = useState('')
+  const [dateFrom, setDateFrom] = useState('')
+  const [dateTo, setDateTo] = useState('')
+  const [visibilityFilter, setVisibilityFilter] = useState('')
+
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedSearch(searchInput), DEBOUNCE_MS)
+    return () => clearTimeout(t)
+  }, [searchInput])
+
+  const listParams = useMemo(
+    () => ({
+      ...(debouncedSearch.trim() && { search: debouncedSearch.trim() }),
+      ...(dateFrom && { date_from: dateFrom }),
+      ...(dateTo && { date_to: dateTo }),
+      ...(visibilityFilter && { visibility: visibilityFilter }),
+    }),
+    [debouncedSearch, dateFrom, dateTo, visibilityFilter]
+  )
+  const { data: entries = [], isLoading, error } = useJournalList(listParams)
   const createEntry = useJournalCreate()
   const updateEntry = useJournalUpdate()
 
@@ -68,6 +95,25 @@ export default function PatientJournalPage() {
           <Plus size={18} />
           Nueva entrada
         </Button>
+      </div>
+      <div className="searchBar filterRow" style={{ marginBottom: 16 }}>
+        <input
+          type="search"
+          placeholder="Buscar por palabra clave"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+        />
+        <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} placeholder="Desde" />
+        <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} placeholder="Hasta" />
+        <select
+          value={visibilityFilter}
+          onChange={(e) => setVisibilityFilter(e.target.value)}
+          style={{ padding: '8px 12px', borderRadius: 8 }}
+        >
+          {VISIBILITY_OPTIONS.map((o) => (
+            <option key={o.value || 'all'} value={o.value}>{o.label}</option>
+          ))}
+        </select>
       </div>
       <div className={styles.list}>
         {entries.length === 0 ? (

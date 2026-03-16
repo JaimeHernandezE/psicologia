@@ -21,10 +21,4 @@ export const linksApi = {
 
   acceptInvitation: (linkId) =>
     apiClient.post(`/api/links/${linkId}/activate/`).then((r) => r.data),
-
-  groupsList: () =>
-    apiClient.get('/api/links/groups/').then((r) => r.data),
-
-  groupCreate: (data) =>
-    apiClient.post('/api/links/groups/', data).then((r) => r.data),
 }

@@ -7,5 +7,5 @@ class JournalEntrySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = JournalEntry
-        fields = ("id", "patient", "body", "visibility", "created_at", "updated_at")
+        fields = ("id", "patient", "group", "body", "visibility", "created_at", "updated_at")
         read_only_fields = ("created_at", "updated_at")

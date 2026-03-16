@@ -32,6 +32,32 @@ class Summary(models.Model):
         verbose_name_plural = "Resúmenes"
 
 
+class GroupSummary(models.Model):
+    """Resumen grupal generado por IA a partir de resúmenes individuales."""
+
+    group = models.ForeignKey(
+        "links.Group",
+        on_delete=models.CASCADE,
+        related_name="group_summaries",
+    )
+    body_ai = models.TextField(help_text="Texto generado por Claude")
+    body_edited = models.TextField(blank=True)
+    created_by = models.ForeignKey(
+        "users.TherapistProfile",
+        on_delete=models.CASCADE,
+        related_name="created_group_summaries",
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Resumen grupal {self.id} – {self.group}"
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = "Resumen grupal"
+        verbose_name_plural = "Resúmenes grupales"
+
+
 class SummaryEntry(models.Model):
     """Tabla intermedia entre Summary y JournalEntry."""
 

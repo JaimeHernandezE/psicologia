@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Summary, SummaryEntry
+from .models import Summary, SummaryEntry, GroupSummary
 
 
 class SummarySerializer(serializers.ModelSerializer):
@@ -29,3 +29,10 @@ class SummarySerializer(serializers.ModelSerializer):
 class SummaryCreateSerializer(serializers.Serializer):
     link_id = serializers.IntegerField()
     journal_entry_ids = serializers.ListField(child=serializers.IntegerField(), allow_empty=False)
+
+
+class GroupSummarySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GroupSummary
+        fields = ("id", "group", "body_ai", "body_edited", "created_by", "created_at")
+        read_only_fields = ("body_ai", "created_by", "created_at")

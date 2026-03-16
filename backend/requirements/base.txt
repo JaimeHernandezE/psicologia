@@ -12,8 +12,9 @@ djangorestframework-simplejwt>=5.3,<6
 django-allauth>=0.57,<0.69
 requests>=2.31,<3
 
-# API docs
+# API docs & filters
 drf-spectacular>=0.27,<1
+django-filter>=24.0,<25
 
 # Config & media
 python-decouple>=3.8,<4

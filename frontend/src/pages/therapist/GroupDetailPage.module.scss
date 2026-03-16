@@ -56,33 +56,42 @@
   padding-top: $space-4;
 }
 
-.summaryItem {
-  padding: $space-4;
-  border-radius: $border-radius-md;
-  border: 1px solid $border-color;
-  background: #fff;
-  margin-bottom: $space-3;
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-800;
+  margin-bottom: $space-4;
 }
 
-.summaryMeta {
-  font-size: $font-size-sm;
-  color: $color-neutral-600;
-  margin-bottom: $space-2;
-  cursor: pointer;
+.memberRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: $space-3;
+  border-radius: $border-radius-md;
+  border: 1px solid $border-color;
+  background: #fff;
+  margin-bottom: $space-2;
 }
 
-.summaryContent {
+.memberEmail {
   font-size: $font-size-base;
   color: $color-neutral-800;
-  line-height: 1.5;
-  white-space: pre-wrap;
-  margin-top: $space-2;
 }
 
-.taskItem {
+.memberActions {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.confirmText {
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+  margin-right: $space-2;
+}
+
+.taskCard {
   padding: $space-4;
   border-radius: $border-radius-md;
   border: 1px solid $border-color;
@@ -107,17 +116,52 @@
   margin-top: $space-2;
 }
 
-.notesArea {
-  min-height: 200px;
+.formRow {
+  margin-bottom: $space-3;
 }
 
-.empty {
-  color: $color-neutral-600;
-  font-size: $font-size-base;
+.formActions {
+  margin-top: $space-4;
+}
+
+.patientBlock {
+  margin-bottom: $space-6;
+}
+
+.patientLabel {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-800;
+  margin-bottom: $space-2;
+}
+
+.summaryItem {
+  padding: $space-2;
+  border-radius: $border-radius-md;
+  border: 1px solid $border-color;
+  margin-bottom: $space-2;
+}
+
+.summaryCheckbox {
+  margin-right: $space-2;
+}
+
+.groupSummaryCard {
   padding: $space-4;
+  border-radius: $border-radius-md;
+  border: 1px solid $border-color;
+  background: #fff;
+  margin-bottom: $space-4;
 }
 
-.loading {
+.groupSummaryMeta {
+  font-size: $font-size-sm;
+  color: $color-neutral-600;
+  margin-bottom: $space-2;
+}
+
+.loading,
+.empty {
   text-align: center;
   padding: $space-8;
   color: $color-neutral-600;
@@ -131,24 +175,8 @@
   border-radius: $border-radius-md;
 }
 
-.createTaskForm {
-  margin-bottom: $space-6;
-}
-
-.formRow {
-  margin-bottom: $space-3;
-}
-
-.formActions {
-  display: flex;
-  gap: $space-3;
-  margin-top: $space-4;
-}
-
-.notesPlaceholder {
-  font-size: $font-size-sm;
-  color: $color-neutral-500;
-  font-style: italic;
+.dropdown {
+  margin-bottom: $space-4;
 }
 
 .searchSection {

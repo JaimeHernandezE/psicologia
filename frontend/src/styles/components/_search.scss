@@ -1,0 +1,139 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.searchBar {
+  display: flex;
+  gap: $space-2;
+  align-items: center;
+  flex-wrap: wrap;
+
+  input[type="text"],
+  input[type="search"] {
+    flex: 1;
+    min-width: 200px;
+    padding: $space-2 $space-3;
+    font-size: $font-size-base;
+    border: 1px solid $border-color;
+    border-radius: $border-radius-md;
+    background: #fff;
+  }
+
+  button {
+    flex-shrink: 0;
+  }
+}
+
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-3;
+  align-items: center;
+  margin-top: $space-3;
+  margin-bottom: $space-4;
+}
+
+.searchResults {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.resultItem {
+  padding: $space-3 $space-4;
+  border-radius: $border-radius-md;
+  border: 1px solid $border-color;
+  background: #fff;
+  font-size: $font-size-sm;
+  color: $color-neutral-800;
+
+  .resultItemMeta {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    margin-bottom: $space-2;
+    font-size: $font-size-xs;
+    color: $color-neutral-600;
+  }
+
+  .resultItemExcerpt {
+    line-height: 1.5;
+  }
+}
+
+.highlight {
+  background: rgba(217, 193, 80, 0.35);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+.aiResponse {
+  padding: $space-4;
+  border-radius: $border-radius-md;
+  background: $color-primary-bg;
+  border-left: 4px solid $color-primary;
+  margin-top: $space-4;
+  margin-bottom: $space-4;
+  white-space: pre-wrap;
+  line-height: 1.6;
+  font-size: $font-size-base;
+  color: $color-neutral-800;
+}
+
+.aiSources {
+  margin-top: $space-4;
+  border-top: 1px solid $border-color;
+  padding-top: $space-3;
+
+  .aiSourcesToggle {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-neutral-700;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: $space-2 0;
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+
+    &:hover {
+      color: $color-primary-dark;
+    }
+  }
+
+  .aiSourcesList {
+    margin-top: $space-2;
+    padding-left: $space-4;
+    list-style: none;
+
+    li {
+      font-size: $font-size-sm;
+      color: $color-neutral-600;
+      margin-bottom: $space-2;
+      padding: $space-2;
+      border-radius: $border-radius-sm;
+      background: $color-neutral-50;
+
+      strong {
+        color: $color-neutral-800;
+        font-weight: $font-weight-medium;
+      }
+    }
+  }
+}
+
+.searchDivider {
+  height: 1px;
+  background: $border-color;
+  margin: $space-6 0;
+}
+
+.searchSectionLabel {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-neutral-700;
+  margin-bottom: $space-2;
+}

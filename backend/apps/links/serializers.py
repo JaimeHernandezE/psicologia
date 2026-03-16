@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from apps.users.serializers import TherapistProfileSerializer, PatientProfileSerializer
+from apps.summaries.serializers import GroupSummarySerializer
 
 from .models import Group, GroupMembership, TherapistPatientLink
 
@@ -35,15 +36,34 @@ class GroupMembershipSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GroupMembership
-        fields = ("id", "patient", "joined_at")
+        fields = ("id", "patient", "joined_at", "is_active")
         read_only_fields = ("joined_at",)
 
 
 class GroupSerializer(serializers.ModelSerializer):
-    memberships = GroupMembershipSerializer(many=True, read_only=True)
+    members = serializers.SerializerMethodField()
+    members_count = serializers.SerializerMethodField()
     therapist = TherapistProfileSerializer(read_only=True)
+
+    group_summaries = GroupSummarySerializer(many=True, read_only=True)
 
     class Meta:
         model = Group
-        fields = ("id", "therapist", "name", "created_at", "memberships")
+        fields = (
+            "id",
+            "name",
+            "therapist",
+            "created_at",
+            "members",
+            "members_count",
+            "is_active",
+            "group_summaries",
+        )
         read_only_fields = ("created_at",)
+
+    def get_members(self, obj):
+        qs = obj.memberships.filter(is_active=True)
+        return GroupMembershipSerializer(qs, many=True).data
+
+    def get_members_count(self, obj):
+        return obj.memberships.filter(is_active=True).count()
